@@ -17,7 +17,7 @@ class point:
         
         #fill pollution air
         i_station = np.where((air_pollution_dict['x'] == self.x) & (air_pollution_dict['y'] == self.y))
-        
+        print(i_station)
         if len(i_station[0])==0: 
             self.pollution_air = 0
             
