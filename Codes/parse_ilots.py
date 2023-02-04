@@ -9,4 +9,4 @@ import sys
 print("Hello")
 data = gpd.read_file("./Data/ilots_chaleur/ilots-de-chaleur-2016.geojson")
 
-#print(data)
+print(data.head())
