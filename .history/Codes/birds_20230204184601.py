@@ -77,30 +77,40 @@ for year in years :
                 response = requests.get(url_recent, headers=headers, data=payload)
 
                 data_bird = json.loads(response.text)
-            name, obsdate, howmany, lat, lon = [],[],[],[],[]
-            j = 0
-            for i in data_bird : 
+                name, obsdate, howmany, lat, lon = np.zeros(len(data_bird),  dtype=str), np.zeros(len(data_bird),  dtype=str), np.zeros(len(data_bird),  dtype=str), np.zeros(len(data_bird),  dtype=str), np.zeros(len(data_bird),  dtype=str)
+                
+                j = 0
+                for i in data_bird : 
+                    # print(data_bird)
 
+                    if "howMany" in i.keys() : 
+                        howmany[j] = i["howMany"]
 
-                if "howMany" in i.keys() : 
-                    howmany.append(i["howMany"])
+                    else : 
+                        howmany[j] = 1
 
-                else : 
+                    name[j] = i["comName"]
+                    obsdate[j] = i["obsDt"]
+                    # print(i["howMany"])
+                    
 
-                    howmany.append('1')
+                    lat[j] = i["lat"]
+                    lon[j] = i["lng"]
+                    j += 1
 
-                name.append(i["comName"])
-                obsdate.append(i["obsDt"])
-                lat.append(i["lat"])
-                lon.append(i["lng"])
+                data_birds_day = np.zeros((len(data_bird), 5),  dtype=str)
+                data_birds_day[:, 0] = name
+                data_birds_day[:, 1] = obsdate
+                data_birds_day[:, 2] = howmany
+                data_birds_day[:, 3] = lat
+                data_birds_day[:, 4] = lon
+                data_birds_all_period.append(data_birds_day)
 
-                j += 1
-
-            data_birds_all_period.append([name, obsdate, howmany,lat,lon])
 
         with open('data_birds_{}.pickle'.format(year), 'wb') as f:
             pickle.dump(data_birds_all_period, f)
         f.close()
-
+        # Data_Birds = {'Data', data_birds_all_period}
+        # savemat('Data_Birds.mat', Data_Birds)
 
         
