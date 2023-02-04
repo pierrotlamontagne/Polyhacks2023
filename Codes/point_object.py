@@ -16,7 +16,15 @@ class point:
 
         
         #fill pollution air
-        self.pollution_air = 
+        i_station = np.where((air_pollution_dict['x'] == self.x) & (air_pollution_dict['y'] == self.y))
+        
+        if len(i_station[0])==0: 
+            self.pollution_air = 0
+            
+        else: 
+            self.pollution_air = air_pollution_dict["valeur"][i_station]
+            
+         
         
         #fill pluie
         
@@ -27,39 +35,7 @@ class point:
         #fill_acoustique
         
         
-        
-        #Facteurs environnementaux
-        self.temperature = temperature
-        self.pollution_air = pollution_air
-        self.pluie = pluie
-        self.neige = neige
-        self.parc = parc
-        self.acoustique = acoustique
-        
 
-def fill_temperature(t): 
-    
-    return
-
-def fill_pollution_air(x,y): 
-    
-    return
-
-def fill_pluie(t): 
-    
-    return
-
-def fill_neige(t): 
-    
-    return
-
-def fill_parc(x,y): 
-    
-    return
-
-def fill_acoustique(x,y): 
-    
-    return
 
 
         
