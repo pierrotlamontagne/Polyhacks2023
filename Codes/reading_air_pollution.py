@@ -33,8 +33,8 @@ polluant = data["polluant"]
 quantite = data["valeur"] #De 0 à 500
 
 air_pollution_dict = dict()
-air_pollution_dict["i_Xgrid"] = np.zeros(len(stationId))
-air_pollution_dict["i_Ygrid"] = np.zeros(len(stationId))
+air_pollution_dict["x"] = np.zeros(len(stationId))
+air_pollution_dict["y"] = np.zeros(len(stationId))
 air_pollution_dict["valeur"] = np.zeros(len(stationId))
 
 for i in range(len(stationId)): 
@@ -43,8 +43,8 @@ for i in range(len(stationId)):
     i_Xgrid = find_nearest(latitude[i],x)
     i_Ygrid = find_nearest(longitude[i],y)
     
-    air_pollution_dict["i_Xgrid"][i] = i_Xgrid
-    air_pollution_dict["i_Ygrid"][i] = i_Ygrid
+    air_pollution_dict["x"][i] = i_Xgrid
+    air_pollution_dict["y"][i] = i_Ygrid
     
     #On trouve la quantité de polluant
     air_pollution_dict["valeur"][i] = quantite[i]
