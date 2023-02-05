@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from reading_air_pollution import air_pollution_dict
-from reading_temperature import temp
+from reading_meteo import temp, precipitation
 
 class point: 
     def __init__(self,x,y,t):
@@ -13,9 +13,10 @@ class point:
         #Temps
         self.t = t #From 0 to 364
         
-        #fill temperature
+        #fill météo
         self.temperature = temp[t]
-        
+        self.precipitation = precipitation[t]
+    
         #fill pollution air
         i_station = np.where((air_pollution_dict['x'] == self.x) & (air_pollution_dict['y'] == self.y))
         print(i_station)
@@ -25,15 +26,6 @@ class point:
         else: 
             self.pollution_air = air_pollution_dict["valeur"][i_station]
             
-         
-        
-        #fill pluie
-        
-        #fill_neige
-        
-        #fill_parc
-        
-        #fill_acoustique
         
         
 
