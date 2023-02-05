@@ -51,6 +51,7 @@ for i in range(len(x)-1):
                 },
                 "properties":{
                     "probPerSector":rand.randint(1,7),
+                    "probPerSector2":rand.randint(1,7),
                 },
             }
 
