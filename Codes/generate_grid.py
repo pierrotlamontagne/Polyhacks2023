@@ -21,10 +21,10 @@ for i in range(len(x)-1):
             "type":"Feature",
             "geometry":{
                 "type":"Polygon",
-                "coordinates":[[[x[i],y[i]],[x[i],y[i+1]],[x[i+1],y[i+1],x[i+1],y[i]]]],
+                "coordinates":[[[y[j],x[i]],[y[j+1],x[i]],[y[j+1],x[i+1]],[y[j],x[i+1]],[y[j],x[i]]]],
             },
             "properties":{
-                "prob":rand.randint(1,7),
+                "probPerSector":rand.randint(1,7),
             },
         }
 
