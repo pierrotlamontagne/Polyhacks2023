@@ -107,7 +107,7 @@ for year in years :
         
             pd_data = pd.DataFrame(data_month)
             with open('data_birds_{}_{}.pickle'.format(year,month), 'wb') as f:
-                pickle.dump(data_birds_all_period, f)
+                pickle.dump(pd_data, f)
             f.close()
 
 
