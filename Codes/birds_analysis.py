@@ -4,7 +4,7 @@ from glob import glob
 
 # DataDir = './data_birds*'
 
-# years = list(range(2019, 2024))
+# years = list(range(2019, 2023))
 # months = list(range(1, 13))
 # data_whole = []
 
@@ -40,15 +40,36 @@ from glob import glob
 with open('../Data/Birds/data_birds_whole.pickle', 'rb') as f :
     data_whole = pickle.load(f)
 f.close()
-print(len(data_whole))
-nameBirds = []
-i=0
-for data in data_whole[-2] : 
-    # print(i)
-    namebirds = data.iloc[:,0]
-    # print(namebirds)
-    i+=1
-    nameBirds.append(data_whole[i]['Name'])
 
-# print(nameBirds)
+HowManyBirds = 0
+
+nameBirds = []
+
+print(data_whole)
+
+for data in data_whole : 
+
+    namebirds = data.iloc[:,0]
+    nameBirds.append(namebirds.iloc[0])
+
+EveryBird = []
+for birds in nameBirds:
+    for bird in birds : 
+        EveryBird.append(bird)
+
+Set_Birds = np.array(list(set(EveryBird)))
+
+counts_birds = []
+for bird in Set_Birds : 
+    counts_birds.append(EveryBird.count(bird))
+
+counts_birds = np.array(counts_birds)
+idx_max_sightings = np.where(counts_birds == max(counts_birds))[0]
+
+print(Set_Birds[idx_max_sightings])
+
+
+
+
+# print(len(EveryBird))
     
