@@ -9,7 +9,7 @@ months_day = [(1,31), (2, 28), (3, 31), (4, 30), (5, 31), (6,30), (7, 31), (8, 3
 
 data_birds_all_period = [] 
 
-years = [2022, 2021, 2020, 2019]
+years = [2023, 2022, 2021, 2020, 2019]
 
 for year in years : 
 
@@ -58,8 +58,8 @@ for year in years :
             first_year.append(day)
                 
         pd_data = pd.DataFrame(first_year)
-        with open('data_birds_{}.pickle'.format(year), 'wb') as f:
-            pickle.dump(first_year, f)
+        with open('data_birds_{}_1.pickle'.format(year), 'wb') as f:
+            pickle.dump(pd_data, f)
         f.close()
     
     else : 
