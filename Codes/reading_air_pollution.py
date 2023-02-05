@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from grid import x, y
+import matplotlib.pyplot as plt
 
 def find_nearest(array, value):
     
@@ -37,14 +38,21 @@ air_pollution_dict["x"] = np.zeros(len(stationId))
 air_pollution_dict["y"] = np.zeros(len(stationId))
 air_pollution_dict["valeur"] = np.zeros(len(stationId))
 
+grid_x, grid_y = np.mgrid[0:len(x):500j, 0:len(y):500j]
+grid = np.zeros((len(x),len(y)))
+
 for i in range(len(stationId)): 
 
     #On trouve l'élément de la grid le plus proche de l'emplacement du stationId
     i_Xgrid = find_nearest(latitude[i],x)
     i_Ygrid = find_nearest(longitude[i],y)
     
-    air_pollution_dict["x"][i] = i_Xgrid
-    air_pollution_dict["y"][i] = i_Ygrid
-    
     #On trouve la quantité de polluant
-    air_pollution_dict["valeur"][i] = quantite[i]
+    valeur = quantite[i]
+    air_pollution_dict["valeur"][i] = valeur
+    
+    sigma_x, sigma_y = 10, 10
+    A = valeur
+    grid += A * np.exp(-(((grid_x - i_Xgrid)**2 / (2 * sigma_x**2)) + ((grid_y - i_Ygrid)**2 / (2 * sigma_y**2))))
+    
+air_pollution_dict["grid"] = grid
