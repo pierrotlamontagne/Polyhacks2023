@@ -3,12 +3,13 @@ import requests
 import json
 from scipy.io import savemat
 import pickle
+import pandas as pd
 
 months_day = [(1,31), (2, 28), (3, 31), (4, 30), (5, 31), (6,30), (7, 31), (8, 31), (9, 30), (10, 31), (11, 30), (12, 31)]  
 
 data_birds_all_period = [] 
 
-years = [2023, 2022, 2021, 2020, 2019]
+years = [2022, 2021, 2020, 2019]
 
 for year in years : 
 
@@ -19,6 +20,8 @@ for year in years :
         j = months_day[0]
         month = j[0]
         print(month)
+
+        first_year = []
         for day in range(1, j[1]+1) : 
             print('Day : ', day)
 
@@ -48,18 +51,21 @@ for year in years :
                 obsdate.append(i["obsDt"])
                 lat.append(i["lat"])
                 lon.append(i["lng"])
-
                 j += 1
 
-            data_birds_all_period.append([name, obsdate, howmany,lat,lon])
 
+            day = {'Name': name, 'obsdate': obsdate, 'how_many' : howmany, 'lat': lat, 'lon': lon}
+            first_year.append(day)
+                
+        pd_data = pd.DataFrame(first_year)
         with open('data_birds_{}.pickle'.format(year), 'wb') as f:
-            pickle.dump(data_birds_all_period, f)
+            pickle.dump(first_year, f)
         f.close()
     
     else : 
         for j in months_day : 
 
+            data_month = []
             month = j[0]
             print('Month : ', month)
 
@@ -77,30 +83,32 @@ for year in years :
                 response = requests.get(url_recent, headers=headers, data=payload)
 
                 data_bird = json.loads(response.text)
-            name, obsdate, howmany, lat, lon = [],[],[],[],[]
-            j = 0
-            for i in data_bird : 
+                name, obsdate, howmany, lat, lon = [],[],[],[],[]
+                k = 0
+                for i in data_bird : 
 
 
-                if "howMany" in i.keys() : 
-                    howmany.append(i["howMany"])
+                    if "howMany" in i.keys() : 
+                        howmany.append(i["howMany"])
 
-                else : 
+                    else : 
 
-                    howmany.append('1')
+                        howmany.append('1')
 
-                name.append(i["comName"])
-                obsdate.append(i["obsDt"])
-                lat.append(i["lat"])
-                lon.append(i["lng"])
+                    name.append(i["comName"])
+                    obsdate.append(i["obsDt"])
+                    lat.append(i["lat"])
+                    lon.append(i["lng"])
 
-                j += 1
+                    k += 1
 
-            data_birds_all_period.append([name, obsdate, howmany,lat,lon])
-
-        with open('data_birds_{}.pickle'.format(year), 'wb') as f:
-            pickle.dump(data_birds_all_period, f)
-        f.close()
+                day = {'Name': name, 'obsdate': obsdate, 'how_many' : howmany, 'lat': lat, 'lon': lon}
+                data_month.append(day)
+        
+            pd_data = pd.DataFrame(data_month)
+            with open('data_birds_{}_{}.pickle'.format(year,month), 'wb') as f:
+                pickle.dump(data_birds_all_period, f)
+            f.close()
 
 
         
